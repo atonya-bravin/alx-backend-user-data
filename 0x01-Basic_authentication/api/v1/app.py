@@ -38,7 +38,8 @@ def before_request():
     This function is only executed before each
     request that is handled by a function of that blueprint.
     """
-    path_list = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+    path_list = ['/api/v1/status/', '/api/v1/unauthorized/',
+                 '/api/v1/forbidden/']
     if auth is None:
         pass
     elif auth.require_auth(request.path, path_list):
@@ -47,7 +48,6 @@ def before_request():
         return None, abort(401)
     elif auth.current_user(request):
         return None, abort(403)
-    
 
 
 @app.errorhandler(404)
