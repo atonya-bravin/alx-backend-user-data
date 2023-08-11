@@ -7,7 +7,6 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 import os
-from authentication import BasicAuth, OAuth2Auth, TokenAuth
 
 
 app = Flask(__name__)
@@ -20,9 +19,9 @@ auth_type = os.environ.get("AUTH_TYPE")
 
 # Define different authentication instances
 auth_instances = {
-    "basic": BasicAuth(),
-    "oauth2": OAuth2Auth(),
-    "token": TokenAuth()
+    "basic": "BasicAuth()",
+    "oauth2": "OAuth2Auth()",
+    "token": "TokenAuth()"
 }
 
 # Load the appropriate authentication instance based on AUTH_TYPE
