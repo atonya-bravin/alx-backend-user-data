@@ -12,41 +12,6 @@ import os
 app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
-auth = None
-
-# Get the value of the AUTH_TYPE environment variable
-auth_type = os.environ.get("AUTH_TYPE")
-
-# Define different authentication instances
-auth_instances = {
-    "basic": "BasicAuth()",
-    "oauth2": "OAuth2Auth()",
-    "token": "TokenAuth()"
-}
-
-# Load the appropriate authentication instance based on AUTH_TYPE
-auth = auth_instances.get(auth_type.lower())
-
-if auth:
-    from api.v1.auth.auth import Auth
-    auth = Auth()
-
-
-def before_request():
-    """
-    This function is only executed before each
-    request that is handled by a function of that blueprint.
-    """
-    path_list = ['/api/v1/status/', '/api/v1/unauthorized/',
-                 '/api/v1/forbidden/']
-    if auth is None:
-        pass
-    elif auth.require_auth(request.path, path_list):
-        pass
-    elif auth.authorization_header(request):
-        return None, abort(401)
-    elif auth.current_user(request):
-        return None, abort(403)
 
 
 @app.errorhandler(404)
