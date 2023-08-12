@@ -35,7 +35,7 @@ class Auth:
         """
         if request is None:
             return None
-        
+
         if "Authorization" not in request.keys():
             return None
         else:
