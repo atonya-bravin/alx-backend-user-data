@@ -19,6 +19,7 @@ if getenv("AUTH_TYPE") == "auth":
 # elif getenv("AUTH_TYPE") == "basic_auth":
 #     auth = BasicAuth()
 
+
 @app.errorhandler(404)
 def not_found(error) -> str:
     """Not found handler"""
@@ -48,7 +49,6 @@ def before_request():
             abort(401)
         if not auth.current_user(request):
             abort(403)
-
 
 
 if __name__ == "__main__":
